@@ -15,5 +15,9 @@ RSpec.describe StringCalculator, type: :model do
     it "returns the sum of two numbers" do
       expect(StringCalculator.add("1,5")).to eq(6)
     end
+
+    it "handles new lines between numbers" do
+      expect(StringCalculator.add("1\n2,3")).to eq(6)
+    end
   end
 end
