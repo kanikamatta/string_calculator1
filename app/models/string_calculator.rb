@@ -6,7 +6,8 @@ class StringCalculator
     
     delimiter = ","
     if numbers.start_with?("//")
-      delimiter = numbers[2]
+      delimiter_section = numbers[2..]
+      delimiter = delimiter_section[/(?<=\[).+?(?=\])/] || delimiter_section[0]
       numbers = numbers[(numbers.index("\n") + 1)..-1]
     end
     
@@ -16,7 +17,7 @@ class StringCalculator
     if negative_numbers.any?
       raise "Negative numbers not allowed: #{negative_numbers.join(',')}"
     end
-
+    
     numbers_arr.reject! { |num| num > 1000 }
     
     numbers_arr.sum
