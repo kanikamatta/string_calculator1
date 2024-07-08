@@ -7,7 +7,12 @@ class StringCalculator
     delimiter = ","
     if numbers.start_with?("//")
       delimiter_section = numbers[2..]
-      delimiter = delimiter_section[/(?<=\[).+?(?=\])/] || delimiter_section[0]
+      delimiter_list = delimiter_section.scan(/\[([^\[\]]+)\]/).flatten
+      if delimiter_list.any?
+        delimiter = Regexp.union(delimiter_list)
+      else
+        delimiter = delimiter_section[0]
+      end
       numbers = numbers[(numbers.index("\n") + 1)..-1]
     end
     
