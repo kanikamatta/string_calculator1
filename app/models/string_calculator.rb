@@ -9,7 +9,7 @@ class StringCalculator
       delimiter_section = numbers[2..]
       delimiter_list = delimiter_section.scan(/\[([^\[\]]+)\]/).flatten
       if delimiter_list.any?
-        delimiter = Regexp.union(delimiter_list)
+        delimiter = Regexp.union(delimiter_list.map { |d| Regexp.escape(d) })
       else
         delimiter = delimiter_section[0]
       end
